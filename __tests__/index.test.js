@@ -1,10 +1,10 @@
-import genDiff from '../../src/';
+import genDiff from '../src/';
 
-describe('genDiff compares two JSON files', () => {
-  const filePathToBeforeJSON = '__tests__/test_files/before.json';
-  const filePathToAfterJSON = '__tests__/test_files/after.json';
-  const filePathToBeforeYML = '__tests__/test_files/before.yml';
-  const filePathToAfterYML = '__tests__/test_files/after.yml';
+describe('Compares two configuration files', () => {
+  const filePathToBeforeJSON = '__tests__/fixtures/before.json';
+  const filePathToAfterJSON = '__tests__/fixtures/after.json';
+  const filePathToBeforeYML = '__tests__/fixtures/before.yml';
+  const filePathToAfterYML = '__tests__/fixtures/after.yml';
 
   const expectedString =
 `{
