@@ -1,17 +1,36 @@
 import fs from 'fs';
+import path from 'path';
 import _ from 'lodash';
-import YAML from 'js-yaml';
+import yaml from 'js-yaml';
+import ini from 'ini';
 
+const formatParsers = [
+  {
+    format: '.json',
+    parser: JSON.parse,
+  },
+  {
+    format: '.yml',
+    parser: yaml.safeLoad,
+  },
+  {
+    format: '.ini',
+    parser: ini.parse,
+  },
+];
+const chooseParser = (ext) => {
+  const formatParser = _.find(formatParsers, ({ format }) => (format === ext));
+  if (!formatParser) {
+    throw new Error('Unsupported file format');
+  }
+  return formatParser.parser;
+};
 
 const getObjectFromFile = (pathToFile) => {
-  const fileFormat = pathToFile.split('.').pop().toLowerCase();
+  const fileFormat = path.extname(pathToFile);
+  const parse = chooseParser(fileFormat);
   const fileStr = fs.readFileSync(pathToFile, 'utf8');
-  if (fileFormat === 'json') {
-    return JSON.parse(fileStr);
-  } else if (fileFormat === 'yml') {
-    return YAML.safeLoad(fileStr);
-  }
-  throw new Error('Unsupported file format');
+  return parse(fileStr);
 };
 
 const hasProp = (object, prop) => Object.prototype.hasOwnProperty.call(object, prop);

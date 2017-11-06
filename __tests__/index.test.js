@@ -2,9 +2,11 @@ import genDiff from '../src/';
 
 describe('Compares two configuration files', () => {
   const filePathToBeforeJSON = '__tests__/fixtures/before.json';
-  const filePathToAfterJSON = '__tests__/fixtures/after.json';
   const filePathToBeforeYML = '__tests__/fixtures/before.yml';
+  const filePathToBeforeINI = '__tests__/fixtures/before.ini';
+  const filePathToAfterJSON = '__tests__/fixtures/after.json';
   const filePathToAfterYML = '__tests__/fixtures/after.yml';
+  const filePathToAfterINI = '__tests__/fixtures/after.ini';
 
   const expectedString =
 `{
@@ -23,6 +25,10 @@ describe('Compares two configuration files', () => {
     expect(genDiff(filePathToBeforeYML, filePathToAfterYML)).toBe(expectedString);
   });
 
+  test('INI', () => {
+    expect(genDiff(filePathToBeforeINI, filePathToAfterINI)).toBe(expectedString);
+  });
+
   const expectedStringBefore =
 `{
     host: hexlet.io
@@ -34,3 +40,13 @@ describe('Compares two configuration files', () => {
     expect(genDiff(filePathToBeforeJSON, filePathToBeforeJSON)).toBe(expectedStringBefore);
   });
 });
+
+
+describe('Unsupported markup format', () => {
+  const filePathToBeforeXML = '__tests__/fixtures/before.xml';
+  test('should throw error', () => {
+    expect(() => genDiff(filePathToBeforeXML, filePathToBeforeXML))
+      .toThrowError(new Error('Unsupported file format'));
+  });
+});
+
