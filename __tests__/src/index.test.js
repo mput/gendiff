@@ -3,6 +3,8 @@ import genDiff from '../../src/';
 describe('genDiff compares two JSON files', () => {
   const filePathToBeforeJSON = '__tests__/test_files/before.json';
   const filePathToAfterJSON = '__tests__/test_files/after.json';
+  const filePathToBeforeYML = '__tests__/test_files/before.yml';
+  const filePathToAfterYML = '__tests__/test_files/after.yml';
 
   const expectedString =
 `{
@@ -13,8 +15,12 @@ describe('genDiff compares two JSON files', () => {
   + verbose: true
 }`;
 
-  test('should return diff string', () => {
+  test('JSON', () => {
     expect(genDiff(filePathToBeforeJSON, filePathToAfterJSON)).toBe(expectedString);
+  });
+
+  test('YML', () => {
+    expect(genDiff(filePathToBeforeYML, filePathToAfterYML)).toBe(expectedString);
   });
 
   const expectedStringBefore =

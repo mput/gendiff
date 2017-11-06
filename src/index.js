@@ -1,14 +1,23 @@
 import fs from 'fs';
 import _ from 'lodash';
+import YAML from 'js-yaml';
+
 
 const getObjectFromFile = (pathToFile) => {
+  const fileFormat = pathToFile.split('.').pop().toLowerCase();
   const fileStr = fs.readFileSync(pathToFile, 'utf8');
-  return JSON.parse(fileStr);
+  if (fileFormat === 'json') {
+    return JSON.parse(fileStr);
+  } else if (fileFormat === 'yml') {
+    return YAML.safeLoad(fileStr);
+  }
+  throw new Error('Unsupported file format');
 };
+
+const hasProp = (object, prop) => Object.prototype.hasOwnProperty.call(object, prop);
 
 const makeDiffs = (firstObject, secondObject) => {
   const mutualKeys = _.union(Object.keys(firstObject), Object.keys(secondObject));
-  const hasProp = (object, prop) => Object.prototype.hasOwnProperty.call(object, prop);
   const diffs = mutualKeys.reduce((acc, key) => {
     if (hasProp(firstObject, key) && !hasProp(secondObject, key)) {
       return [...acc, { key, value: firstObject[key], change: '-' }];
