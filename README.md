@@ -1,6 +1,6 @@
-<!-- [![Code Climate](https://codeclimate.com/github/mput/xxx/badges/gpa.svg)](https://codeclimate.com/github/mput/xxx)
-[![Issue Count](https://codeclimate.com/github/mput/xxx/badges/issue_count.svg)](https://codeclimate.com/github/mput/xxx)
-[![Build Status](https://travis-ci.org/mput/xxx?branch=master)](https://travis-ci.org/mput/xxx) -->
+[![Maintainability](https://api.codeclimate.com/v1/badges/459294c93fccfb828db0/maintainability)](https://codeclimate.com/github/mput/project-lvl2-s133/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/459294c93fccfb828db0/test_coverage)](https://codeclimate.com/github/mput/project-lvl2-s133/test_coverage)
+[![Build Status](https://travis-ci.org/mput/project-lvl2-s133.svg?branch=master)](https://travis-ci.org/mput/project-lvl2-s133)
 # gendiff
 
 Compares two configuration files and shows a difference.
