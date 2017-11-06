@@ -8,9 +8,7 @@ const getObjectFromFile = (pathToFile) => {
 
 const makeDiffs = (firstObject, secondObject) => {
   const mutualKeys = _.union(Object.keys(firstObject), Object.keys(secondObject));
-
   const hasProp = (object, prop) => Object.prototype.hasOwnProperty.call(object, prop);
-
   const diffs = mutualKeys.reduce((acc, key) => {
     if (hasProp(firstObject, key) && !hasProp(secondObject, key)) {
       return [...acc, { key, value: firstObject[key], change: '-' }];
