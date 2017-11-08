@@ -22,13 +22,22 @@ const getObjectFromFile = (pathToFile) => {
 
 const diffsToString = (diffs, indentation = 0) => {
   const spaceCount = ' '.repeat(indentation);
+  const stringTemplate = (changSign, key, value) => `  ${spaceCount}${changSign} ${key}: ${value}\n`;
+
   const stringRepresentation =
     {
-      changedChild: diff => `  ${spaceCount}  ${diff.key}: ${diffsToString(diff.child, indentation + 4)}\n`,
-      unchanged: diff => `  ${spaceCount}  ${diff.key}: ${diff.valueBefore}\n`,
-      changed: diff => `  ${spaceCount}+ ${diff.key}: ${diff.valueAfter}\n  ${spaceCount}- ${diff.key}: ${diff.valueBefore}\n`,
-      deleted: diff => `  ${spaceCount}- ${diff.key}: ${diff.child ? diffsToString(diff.child, indentation + 4) : diff.valueBefore}\n`,
-      added: diff => `  ${spaceCount}+ ${diff.key}: ${diff.child ? diffsToString(diff.child, indentation + 4) : diff.valueAfter}\n`,
+      changedChild: diff => stringTemplate(' ', diff.key, diffsToString(diff.child, indentation + 4)),
+      unchanged: diff => stringTemplate(' ', diff.key, diff.valueBefore),
+      changed: diff => [stringTemplate('+', diff.key, diff.valueAfter),
+        stringTemplate('-', diff.key, diff.valueBefore)].join(''),
+      deleted: (diff) => {
+        const value = diff.child ? diffsToString(diff.child, indentation + 4) : diff.valueBefore;
+        return stringTemplate('-', diff.key, value);
+      },
+      added: (diff) => {
+        const value = diff.child ? diffsToString(diff.child, indentation + 4) : diff.valueAfter;
+        return stringTemplate('+', diff.key, value);
+      },
     };
   const diffsString = diffs.map(diff => stringRepresentation[diff.changeType](diff));
   return `{\n${diffsString.join('')}${spaceCount}}`;
