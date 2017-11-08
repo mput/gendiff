@@ -50,3 +50,45 @@ describe('Unsupported markup format', () => {
   });
 });
 
+
+describe('Compares two Recursive files', () => {
+  const filePathToBeforeNestedJSON = '__tests__/fixtures/before-nested.json';
+  const filePathToAfterNestedJSON = '__tests__/fixtures/after-nested.json';
+  const filePathToBeforeNestedINI = '__tests__/fixtures/before-nested.ini';
+  const filePathToAfterNestedINI = '__tests__/fixtures/after-nested.ini';
+  const expectedString =
+`{
+    common: {
+        setting1: Value 1
+      - setting2: 200
+        setting3: true
+      - setting6: {
+            key: value
+        }
+      + setting4: blah blah
+      + setting5: {
+            key5: value5
+        }
+    }
+    group1: {
+      + baz: bars
+      - baz: bas
+        foo: bar
+    }
+  - group2: {
+        abc: 12345
+    }
+  + group3: {
+        fee: 100500
+    }
+}`;
+
+  test('JSON-Nested', () => {
+    expect(genDiff(filePathToBeforeNestedJSON, filePathToAfterNestedJSON))
+      .toBe(expectedString);
+  });
+  test('INI-Nested', () => {
+    expect(genDiff(filePathToBeforeNestedINI, filePathToAfterNestedINI))
+      .toBe(expectedString);
+  });
+});

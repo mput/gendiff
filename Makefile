@@ -8,6 +8,9 @@ build:
 test:
 	npm test
 
+testwatch:
+	jest --watchAll
+
 lint:
 	npm run eslint .
 

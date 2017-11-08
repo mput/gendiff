@@ -1,29 +1,16 @@
 import fs from 'fs';
 import path from 'path';
-import _ from 'lodash';
 import yaml from 'js-yaml';
 import ini from 'ini';
+import makeDiffsTree from './makeDiffs';
 
-const formatParsers = [
-  {
-    format: '.json',
-    parser: JSON.parse,
-  },
-  {
-    format: '.yml',
-    parser: yaml.safeLoad,
-  },
-  {
-    format: '.ini',
-    parser: ini.parse,
-  },
-];
+const formatParsers = { '.json': JSON.parse, '.yml': yaml.safeLoad, '.ini': ini.parse };
 const chooseParser = (ext) => {
-  const formatParser = _.find(formatParsers, ({ format }) => (format === ext));
+  const formatParser = formatParsers[ext];
   if (!formatParser) {
     throw new Error('Unsupported file format');
   }
-  return formatParser.parser;
+  return formatParser;
 };
 
 const getObjectFromFile = (pathToFile) => {
@@ -33,38 +20,25 @@ const getObjectFromFile = (pathToFile) => {
   return parse(fileStr);
 };
 
-const hasProp = (object, prop) => Object.prototype.hasOwnProperty.call(object, prop);
-
-const makeDiffs = (firstObject, secondObject) => {
-  const mutualKeys = _.union(Object.keys(firstObject), Object.keys(secondObject));
-  const diffs = mutualKeys.reduce((acc, key) => {
-    if (hasProp(firstObject, key) && !hasProp(secondObject, key)) {
-      return [...acc, { key, value: firstObject[key], change: '-' }];
-    } else if (!hasProp(firstObject, key) && hasProp(secondObject, key)) {
-      return [...acc, { key, value: secondObject[key], change: '+' }];
-    } else if (firstObject[key] === secondObject[key]) {
-      return [...acc, { key, value: firstObject[key], change: false }];
-    }
-    return [...acc, { key, value: secondObject[key], change: '+' },
-      { key, value: firstObject[key], change: '-' }];
-  }, []);
-  return diffs;
+const diffsToString = (diffs, indentation = 0) => {
+  const spaceCount = ' '.repeat(indentation);
+  const stringRepresentation =
+    {
+      changedChild: diff => `  ${spaceCount}  ${diff.key}: ${diffsToString(diff.child, indentation + 4)}\n`,
+      unchanged: diff => `  ${spaceCount}  ${diff.key}: ${diff.valueBefore}\n`,
+      changed: diff => `  ${spaceCount}+ ${diff.key}: ${diff.valueAfter}\n  ${spaceCount}- ${diff.key}: ${diff.valueBefore}\n`,
+      deleted: diff => `  ${spaceCount}- ${diff.key}: ${diff.child ? diffsToString(diff.child, indentation + 4) : diff.valueBefore}\n`,
+      added: diff => `  ${spaceCount}+ ${diff.key}: ${diff.child ? diffsToString(diff.child, indentation + 4) : diff.valueAfter}\n`,
+    };
+  const diffsString = diffs.map(diff => stringRepresentation[diff.changeType](diff));
+  return `{\n${diffsString.join('')}${spaceCount}}`;
 };
-
-const diffsToString = (diffs) => {
-  const diffLines = diffs.map(({ key, value, change }) => {
-    const changeFlag = change || ' ';
-    return `  ${changeFlag} ${key}: ${value}\n`;
-  });
-  return `{\n${diffLines.join('')}}`;
-};
-
 
 const genDiff = (pathToFile1, pathToFile2) => {
   const firstObject = getObjectFromFile(pathToFile1);
   const secondObject = getObjectFromFile(pathToFile2);
-  const diffs = makeDiffs(firstObject, secondObject);
-  const diffsString = diffsToString(diffs);
+  const diffsTree = makeDiffsTree(firstObject, secondObject);
+  const diffsString = diffsToString(diffsTree);
   return diffsString;
 };
 
