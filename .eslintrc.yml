@@ -15,3 +15,4 @@ rules:
   no-console: 0
   no-debugger: 0
   object-curly-newline: 0
+  jest/no-disabled-tests: 0

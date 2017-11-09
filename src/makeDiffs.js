@@ -4,13 +4,13 @@ const getChildOrNull = (fn, firstVal, secondVal) => {
   if (_.isObject(firstVal) && _.isObject(secondVal)) {
     return fn(firstVal, secondVal);
   }
-  return null;
+  return [];
 };
 
 const makeDiffsTree = (objectBefore, objectAfter) => {
   const mutualKeys = _.union(Object.keys(objectBefore), Object.keys(objectAfter));
   const diffs = mutualKeys.map((key) => {
-    const diffNodeTemplate = { key, changeType: '', valueBefore: '', valueAfter: '', child: null };
+    const diffNodeTemplate = { key, changeType: '', valueBefore: '', valueAfter: '', child: [] };
     const valueBefore = objectBefore[key];
     const valueAfter = objectAfter[key];
 

@@ -1,13 +1,18 @@
 import genDiff from '../src/';
 
-describe('Compares two configuration files', () => {
-  const filePathToBeforeJSON = '__tests__/fixtures/before.json';
-  const filePathToBeforeYML = '__tests__/fixtures/before.yml';
-  const filePathToBeforeINI = '__tests__/fixtures/before.ini';
-  const filePathToAfterJSON = '__tests__/fixtures/after.json';
-  const filePathToAfterYML = '__tests__/fixtures/after.yml';
-  const filePathToAfterINI = '__tests__/fixtures/after.ini';
+const filePathToBeforeJSON = '__tests__/fixtures/before.json';
+const filePathToBeforeYML = '__tests__/fixtures/before.yml';
+const filePathToBeforeINI = '__tests__/fixtures/before.ini';
+const filePathToAfterJSON = '__tests__/fixtures/after.json';
+const filePathToAfterYML = '__tests__/fixtures/after.yml';
+const filePathToAfterINI = '__tests__/fixtures/after.ini';
 
+const filePathToBeforeNestedJSON = '__tests__/fixtures/before-nested.json';
+const filePathToAfterNestedJSON = '__tests__/fixtures/after-nested.json';
+const filePathToBeforeNestedINI = '__tests__/fixtures/before-nested.ini';
+const filePathToAfterNestedINI = '__tests__/fixtures/after-nested.ini';
+
+describe('Compares two configuration files', () => {
   const expectedString =
 `{
     host: hexlet.io
@@ -52,11 +57,7 @@ describe('Unsupported markup format', () => {
 
 
 describe('Compares two Recursive files', () => {
-  const filePathToBeforeNestedJSON = '__tests__/fixtures/before-nested.json';
-  const filePathToAfterNestedJSON = '__tests__/fixtures/after-nested.json';
-  const filePathToBeforeNestedINI = '__tests__/fixtures/before-nested.ini';
-  const filePathToAfterNestedINI = '__tests__/fixtures/after-nested.ini';
-  const expectedString =
+  const expectedNestedString =
 `{
     common: {
         setting1: Value 1
@@ -85,10 +86,25 @@ describe('Compares two Recursive files', () => {
 
   test('JSON-Nested', () => {
     expect(genDiff(filePathToBeforeNestedJSON, filePathToAfterNestedJSON))
-      .toBe(expectedString);
+      .toBe(expectedNestedString);
   });
   test('INI-Nested', () => {
     expect(genDiff(filePathToBeforeNestedINI, filePathToAfterNestedINI))
-      .toBe(expectedString);
+      .toBe(expectedNestedString);
   });
 });
+
+
+describe.skip('Output in Plain format', () => {
+  const expectedNestedInPlainString = '  ';
+  test('Flat config in plain format', () => {
+    expect(genDiff(filePathToBeforeJSON, filePathToAfterJSON, 'plain'))
+      .toBe(expectedNestedInPlainString);
+  });
+
+  test('Nested config in plain format', () => {
+    expect(genDiff(filePathToBeforeNestedJSON, filePathToAfterNestedJSON, 'plain'))
+      .toBe(expectedNestedInPlainString);
+  });
+});
+
