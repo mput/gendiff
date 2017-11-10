@@ -92,6 +92,10 @@ describe('Compares two Recursive files', () => {
     expect(genDiff(filePathToBeforeNestedINI, filePathToAfterNestedINI))
       .toBe(expectedNestedString);
   });
+  test('JSON-INI-Nested', () => {
+    expect(genDiff(filePathToBeforeNestedINI, filePathToAfterNestedINI))
+      .toBe(expectedNestedString);
+  });
 });
 
 
