@@ -95,11 +95,24 @@ describe('Compares two Recursive files', () => {
 });
 
 
-describe.skip('Output in Plain format', () => {
-  const expectedNestedInPlainString = '  ';
+describe('Output in Plain format', () => {
+  const expectedFlatInPlainString = 
+`Property 'timeout' was updated.From '50' to '20'
+Property 'proxy' was removed
+Property 'verbose' was added with value: true`;
+
+  const expectedNestedInPlainString = 
+`Property 'common.setting2' was removed
+Property 'common.setting6' was removed
+Property 'common.setting4' was added with value: blah blah
+Property 'common.setting5' was added with complex value
+Property 'group1.baz' was updated.From 'bas' to 'bars'
+Property 'group2' was removed
+Property 'group3' was added with complex value`;
+
   test('Flat config in plain format', () => {
     expect(genDiff(filePathToBeforeJSON, filePathToAfterJSON, 'plain'))
-      .toBe(expectedNestedInPlainString);
+      .toBe(expectedFlatInPlainString);
   });
 
   test('Nested config in plain format', () => {
