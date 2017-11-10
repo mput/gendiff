@@ -96,12 +96,12 @@ describe('Compares two Recursive files', () => {
 
 
 describe('Output in Plain format', () => {
-  const expectedFlatInPlainString = 
+  const expectedFlatInPlainString =
 `Property 'timeout' was updated.From '50' to '20'
 Property 'proxy' was removed
 Property 'verbose' was added with value: true`;
 
-  const expectedNestedInPlainString = 
+  const expectedNestedInPlainString =
 `Property 'common.setting2' was removed
 Property 'common.setting6' was removed
 Property 'common.setting4' was added with value: blah blah

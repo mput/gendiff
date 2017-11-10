@@ -27,25 +27,20 @@ const makeTreeBlock = (arr, indentation = 0) => {
   return `{${divider}${arr.join(divider)}${divider}}`;
 };
 
-
-
 const makePlainLine = (thisBuildBlock, diffObject, keyPrefix = '') => {
-  
-  const stringTemplate = (changSign, key, firstValue ='', secondValue = '') => {
-    const valuesSection = secondValue ? ` '${firstValue}' to '${secondValue}'` : `${firstValue}`
+  const stringTemplate = (changSign, key, firstValue = '', secondValue = '') => {
+    const valuesSection = secondValue ? ` '${firstValue}' to '${secondValue}'` : `${firstValue}`;
     return `Property '${keyPrefix}${key}' was ${changSign}${valuesSection}`;
-  }
+  };
   const stringRepresentation =
     {
       changedChild: (diff) => {
         const keyPath = keyPrefix ? `${keyPrefix}${diff.key}` : `${diff.key}.`;
         return thisBuildBlock(diff.child, keyPath);
       },
-      unchanged: diff => '',
-      changed: diff => stringTemplate('updated.From', diff.key, diff.valueBefore,  diff.valueAfter),
-      deleted: (diff) => {
-        return stringTemplate('removed', diff.key);
-      },
+      unchanged: () => '',
+      changed: diff => stringTemplate('updated.From', diff.key, diff.valueBefore, diff.valueAfter),
+      deleted: diff => stringTemplate('removed', diff.key),
       added: (diff) => {
         const value = diff.child.length > 0 ? ' complex value'
           : ` value: ${diff.valueAfter}`;
