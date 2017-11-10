@@ -4,4 +4,4 @@ dist
 *.log
 .DS_Strore
 question.md
-cc-test-reporter
+/coverage/

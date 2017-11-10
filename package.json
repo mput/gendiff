@@ -10,7 +10,7 @@
     "gendiff": "dist/bin/gendiff.js"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "babel-node": "babel-node",
     "eslint": "eslint",
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
@@ -36,7 +36,9 @@
     "testEnvironment": "node",
     "collectCoverageFrom": [
       "**/*.{js,jsx}",
-      "!**/node_modules/**"
+      "!**/node_modules/**",
+      "!**/dist/**",
+      "!coverage/**"
     ]
   },
   "dependencies": {
