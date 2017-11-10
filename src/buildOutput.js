@@ -1,6 +1,6 @@
 import { flatten } from 'lodash';
-import { makeTreeLine, makeTreeBlock } from './outputTeplates/treeOutputTemplate';
-import { makePlainLine, makePlainBlock } from './outputTeplates/plainOutputTemplate';
+import { makeTreeLine, makeTreeBlock } from './outputTemplates/treeOutputTemplate';
+import { makePlainLine, makePlainBlock } from './outputTemplates/plainOutputTemplate';
 
 
 const builder = (buildLine, buildBlock) =>
