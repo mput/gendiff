@@ -1,21 +1,14 @@
-language: node_js
-node_js:
-  - "8"
-script: make lint test
-
-
-
 env:
   global:
     - CC_TEST_REPORTER_ID=a5788b9997d85d342f26925530395a8e419433905008d260cd73b271d4f3303b
-language: ruby
-rvm:
-  - 2.2.0
+language: node_js
+node_js:
+  - "8"
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - bundle exec rspec
+  - make lint test
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
