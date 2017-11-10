@@ -33,7 +33,11 @@
   "author": "mPut",
   "license": "ISC",
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**"
+    ]
   },
   "dependencies": {
     "commander": "^2.11.0",
@@ -54,6 +58,7 @@
     "eslint-config-airbnb-base": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-jest": "*",
+    "istanbul": "^0.4.5",
     "jest": "^21",
     "jest-cli": "*"
   }
