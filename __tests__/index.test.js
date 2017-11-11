@@ -1,3 +1,4 @@
+import fs from 'fs';
 import genDiff from '../src/';
 
 const filePathToBeforeJSON = '__tests__/fixtures/before.json';
@@ -125,3 +126,11 @@ Property 'group3' was added with complex value`;
   });
 });
 
+describe('Output in JSON format', () => {
+  const filePathToExpectedJSON = '__tests__/fixtures/diffs.json';
+  const expectedObject = JSON.parse(fs.readFileSync(filePathToExpectedJSON, 'utf8'));
+  test('JSON to JSON-diff', () => {
+    expect(genDiff(filePathToBeforeNestedJSON, filePathToAfterNestedJSON, 'json'))
+      .toEqual(expectedObject);
+  });
+});

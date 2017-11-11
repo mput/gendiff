@@ -1,0 +1,132 @@
+{
+"common": {
+        "changeType": "changedChild",
+        "valueBefore": {
+                "setting1": "Value 1",
+                "setting2": "200",
+                "setting3": true,
+                "setting6": {
+                        "key": "value"
+                        }
+                },
+        "valueAfter": {
+                "setting1": "Value 1",
+                "setting3": true,
+                "setting4": "blah blah",
+                "setting5": {
+                        "key5": "value5"
+                        }
+                },
+        "children": {
+                "setting1": {
+                        "changeType": "unchanged",
+                        "valueBefore": "Value 1",
+                        "valueAfter": "Value 1",
+                        "children": {}
+                        },
+                "setting2": {
+                        "changeType": "deleted",
+                        "valueBefore": "200",
+                        "valueAfter": "",
+                        "children": {}
+                        },
+                "setting3": {
+                        "changeType": "unchanged",
+                        "valueBefore": true,
+                        "valueAfter": true,
+                        "children": {}
+                        },
+                "setting6": {
+                        "changeType": "deleted",
+                        "valueBefore": {
+                                "key": "value"
+},
+                        "valueAfter": "",
+                        "children": {
+                                "key": {
+                                        "changeType": "unchanged",
+                                        "valueBefore": "value",
+                                        "valueAfter": "value",
+                                        "children": {}
+}
+}
+},
+                "setting4": {
+                        "changeType": "added",
+                        "valueBefore": "",
+                        "valueAfter": "blah blah",
+                        "children": {}
+},
+                "setting5": {
+                        "changeType": "added",
+                        "valueBefore": "",
+                        "valueAfter": {
+                                "key5": "value5"
+},
+                        "children": {
+                                "key5": {
+                                        "changeType": "unchanged",
+                                        "valueBefore": "value5",
+                                        "valueAfter": "value5",
+                                        "children": {}
+}
+}
+}
+}
+},
+"group1": {
+        "changeType": "changedChild",
+        "valueBefore": {
+                "baz": "bas",
+                "foo": "bar"
+},
+        "valueAfter": {
+                "foo": "bar",
+                "baz": "bars"
+},
+        "children": {
+                "baz": {
+                        "changeType": "changed",
+                        "valueBefore": "bas",
+                        "valueAfter": "bars",
+                        "children": {}
+},
+                "foo": {
+                        "changeType": "unchanged",
+                        "valueBefore": "bar",
+                        "valueAfter": "bar",
+                        "children": {}
+}
+}
+},
+"group2": {
+        "changeType": "deleted",
+        "valueBefore": {
+                "abc": "12345"
+},
+        "valueAfter": "",
+        "children": {
+                "abc": {
+                        "changeType": "unchanged",
+                        "valueBefore": "12345",
+                        "valueAfter": "12345",
+                        "children": {}
+}
+}
+},
+"group3": {
+        "changeType": "added",
+        "valueBefore": "",
+        "valueAfter": {
+                "fee": "100500"
+},
+        "children": {
+                "fee": {
+                        "changeType": "unchanged",
+                        "valueBefore": "100500",
+                        "valueAfter": "100500",
+                        "children": {}
+}
+}
+}
+}

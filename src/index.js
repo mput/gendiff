@@ -3,7 +3,7 @@ import path from 'path';
 import yaml from 'js-yaml';
 import ini from 'ini';
 import makeDiffsTree from './makeDiffs';
-import chooseBuilder from './buildOutput';
+import chooseBuilder from './renderers';
 
 const formatParsers = { '.json': JSON.parse, '.yml': yaml.safeLoad, '.ini': ini.parse };
 const chooseParser = (ext) => {
