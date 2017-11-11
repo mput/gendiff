@@ -13,6 +13,10 @@ const filePathToAfterNestedJSON = '__tests__/fixtures/after-nested.json';
 const filePathToBeforeNestedINI = '__tests__/fixtures/before-nested.ini';
 const filePathToAfterNestedINI = '__tests__/fixtures/after-nested.ini';
 
+const filePathToBeforeNestedDiffTypesJSON = '__tests__/fixtures/before-nested-different-types.json';
+const filePathToAfterNestedDiffTypesJSON = '__tests__/fixtures/after-nested-different-types.json';
+
+
 describe('Compares two configuration files', () => {
   const expectedString =
 `{
@@ -132,5 +136,29 @@ describe('Output in JSON format', () => {
   test('JSON to JSON-diff', () => {
     expect(genDiff(filePathToBeforeNestedJSON, filePathToAfterNestedJSON, 'json'))
       .toEqual(expectedObject);
+  });
+});
+
+describe('Different types of values', () => {
+  const expected =
+`{
+    common: {
+        setting1: Value 1
+      + setting2: 56
+      - setting2: 5,6
+        setting3: true
+        setting6: {
+            key: value
+        }
+    }
+    group1: baz,bas
+  + group2: abc,xvz
+  - group2: {
+        abc: 12345
+    }
+}`;
+  test('JSONs with different types', () => {
+    expect(genDiff(filePathToBeforeNestedDiffTypesJSON, filePathToAfterNestedDiffTypesJSON))
+      .toBe(expected);
   });
 });

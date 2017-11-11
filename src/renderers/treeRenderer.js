@@ -5,17 +5,16 @@ const getDivider = (indentation) => {
   return `\n${gapCount}`;
 };
 
-const valueRender = (value, indentation) => {
-  const divider = getDivider(indentation);
-  const doubleDivider = getDivider(indentation + 4);
-  if (value instanceof Array) {
-    return value;
-  } else if (value instanceof Object) {
-    const lines = Object.keys(value).map(key => `${key}: ${value[key]}`);
+const valueRenderer = (val, indentation) => {
+  if ((val instanceof Object) && !(val instanceof Array)) {
+    const divider = getDivider(indentation);
+    const doubleDivider = getDivider(indentation + 4);
+    const lines = Object.keys(val).map(key => `${key}: ${val[key]}`);
     return `{${doubleDivider}${lines.join(doubleDivider)}${divider}}`;
   }
-  return value;
+  return String(val);
 };
+
 
 const lineTemplate = (changeSign, key, value) => `  ${changeSign} ${key}: ${value}`;
 
@@ -23,8 +22,9 @@ const treeRenderer = (diffsTree, indentation = 0) => {
   const lines = diffsTree.map((diff) => {
     const { key, changeType, valueBefore, valueAfter, children } = diff;
     const childrenIndentation = indentation + 4;
-    const renderedValBefore = valueRender(valueBefore, childrenIndentation);
-    const renderedValAfter = valueRender(valueAfter, childrenIndentation);
+    const renderedValBefore = valueRenderer(valueBefore, childrenIndentation);
+    const renderedValAfter = valueRenderer(valueAfter, childrenIndentation);
+
     const lineRepresentations =
       {
         changedChild: () => lineTemplate(' ', key, treeRenderer(children, childrenIndentation)),
