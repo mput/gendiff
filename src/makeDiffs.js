@@ -33,6 +33,6 @@ const makeDiffsTree = (objectBefore, objectAfter) => {
     return { key, changeType, valueBefore, valueAfter, children };
   });
   return diffs;
-}
+};
 
 export default makeDiffsTree;
