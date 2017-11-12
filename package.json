@@ -1,6 +1,6 @@
 {
   "name": "gendiff-hexlet-mput",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Implementation of second learning project on Hexlet.io",
   "engines": {
     "node": "8"

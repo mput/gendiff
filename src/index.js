@@ -21,7 +21,7 @@ const getObjectFromFile = (pathToFile) => {
   return parse(fileStr);
 };
 
-const genDiff = (pathToFile1, pathToFile2, format) => {
+const genDiff = (pathToFile1, pathToFile2, format = 'tree') => {
   const firstObject = getObjectFromFile(pathToFile1);
   const secondObject = getObjectFromFile(pathToFile2);
   const diffsTree = makeDiffsTree(firstObject, secondObject);
